@@ -61,3 +61,11 @@ class DeleteDepView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Не добавлено ни одного отдела")
         self.assertQuerysetEqual(response.context['departments_dictlist'], [])
+class NewDepView(TestCase):
+    def test_createdep(self):
+        client = Client()
+        client.post(reverse('phonebook:newdepartment', args=(0,)),
+                    {'department_name': 'Отдел'})
+        response = self.client.get(reverse('phonebook:departments'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Отдел")
