@@ -31,4 +31,10 @@ class DepartmentsIndexView(TestCase):
         self.assertContains(response, "Не добавлено ни одного отдела")
         self.assertQuerysetEqual(response.context['departments_list'], [])
 class DepartamentView(TestCase):
-        
+    def test_viewdep(self):
+        db = Department()
+        db.new('Отдел',0)
+        id = db.getall[0].get('departmentid')
+        response = self.client.get(reverse('phonebook:department', args=(id,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Отдел")
