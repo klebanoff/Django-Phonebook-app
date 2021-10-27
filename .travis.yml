@@ -1,0 +1,22 @@
+language: python
+
+python:
+  - "3.8"
+
+env:
+    - DJANGO=3.2.7 DB=sqlite3
+
+#commands to install dependencies
+install:
+  - pip install -q Django==$DJANGO
+  - pip install -q -r requirements.txt
+  - pip install coveralls
+
+before_script:
+  - cd mysite
+
+#command to run the test suite
+script:
+  - python manage.py test
+#  - coverage run --source=department_app manage.py test
+#  - COVERALLS_REPO_TOKEN=6Ek7za0m3VqoUsFxP2bPq4xWkLYWkB13l coveralls

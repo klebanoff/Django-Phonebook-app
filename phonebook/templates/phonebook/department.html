@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+
+  <span class="w3-bar-item w3-right"></span>
+</div>
+
+
+<!-- !PAGE CONTENT! -->
+
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+   <h5><a href="departments.html"></a></h5>
+
+</div>
+  <hr>
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+
+  <div class="w3-panel">
+    <div class="w3-row-padding" style="margin:0 -16px">
+		
+		
+		
+      <div class="w3-twothird">
+	  <a href="/phonebook/{{department.parentid}}">Назад</a>
+        <h5>Отдел: {{ department.dname }}</h5>
+        <table class="w3-table w3-striped w3-white">
+          <tr>
+            <form method="POST">
+              {% csrf_token %}
+                   <p>
+                       <label>Новое имя отдела:</label>
+                       <input type="text" name="department_name" value="{{department.dname}}" />
+                        <input type="submit" value="Изменить" >
+                   </p>
+
+
+               </form>
+          </tr>
+		  Под-отделы:
+           {% for dep in child %}
+			
+          <tr>
+            <td>{{ dep.dname }}</td>
+            <td> </td>
+			<td><i><a href="/phonebook/{{dep.departmentid}}">Открыть департамент</a></i> | <i><a href="/phonebook/{{dep.departmentid}}/delete">Удалить департамент</a></i></td>
+          </tr>
+
+		  {% endfor %}
+		  <tr>
+            <td></td>
+            <td> </td>
+			<td><i><a href="new">Создать новый отдел</a></i></td>
+          </tr>
+        </table>
+		Сотрудники:
+		<table class="w3-table w3-striped w3-white">
+			{% for emp in employees %}
+			<tr>
+            <td><a href="/phonebook/employee/{{emp.employeeid}}">{{ emp.name }} {{ emp.surname }} {{ emp.partonymic }}</a></td>
+            <td> </td>
+			<td><i><a href="/phonebook/employee/{{emp.employeeid}}/delete">Удалить сотрудника</a></i></td>
+          
+		  {% endfor %}
+		  </tr>
+			<tr>
+            <td></td>
+            <td> </td>
+			<td><i><a href="newemployee">Добавить нового сотрудника</a></i></td>
+          </tr>
+		</table>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+
+
+
+
+
+  <!-- End page content -->
+</div>
+
+<script>
+
+</script>
+
+</body>
+</html>
