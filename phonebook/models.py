@@ -15,31 +15,31 @@ class Department:
         with connection.cursor() as cursor:
             cursor.execute("CREATE TABLE IF NOT EXISTS departments(departmentid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,dname TEXT,parentid INT);")
     def getall(self):
-    """Получение всех департаментов в виде списка словарей"""
+        """Получение всех департаментов в виде списка словарей"""
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM departments")
             data = dictfetchall(cursor)
         return data
     def new(self, name, parentid):
-    """Создание нового департамента"""
+        """Создание нового департамента"""
         with connection.cursor() as cursor:
             cursor.execute("INSERT INTO departments VALUES(NULL,%s,%s);",[name,parentid])
     def update(self, id, newname):
-    """Обновление существующего департамента"""
+        """Обновление существующего департамента"""
         with connection.cursor() as cursor:
             cursor.execute("UPDATE departments SET dname = %s WHERE departmentid = %s",[newname,id])
     def delete(self, id):
-    """Удаление департамента по id"""
+        """Удаление департамента по id"""
         with connection.cursor() as cursor:
             cursor.execute("DELETE FROM departments WHERE departmentid = %s", [id])
     def getbyparentid(self,parentid):
-    """Получение всех департаментов по parentid в виде списка словарей"""
+        """Получение всех департаментов по parentid в виде списка словарей"""
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM departments WHERE parentid = %s", [parentid])
             data = dictfetchall(cursor)
         return data
     def getbyid(self,id):
-    """получение одного департамента в виде списка словарей"""
+        """получение одного департамента в виде списка словарей"""
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM departments WHERE departmentid = %s", [id])
             data = dictfetchall(cursor)
@@ -51,31 +51,31 @@ class Employee:
         with connection.cursor() as cursor:
             cursor.execute("CREATE TABLE IF NOT EXISTS employees(employeeid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT,surname TEXT, partonymic TEXT,email TEXT,phonenumber TEXT, departmentid INTEGER, FOREIGN KEY (departmentid) REFERENCES departments (departmentid) ON UPDATE CASCADE ON DELETE CASCADE);")
     def getall(self):
-    """Получение всех сотрудника в виде списка словарей"""
+        """Получение всех сотрудника в виде списка словарей"""
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM employees")
             data = dictfetchall(cursor)
         return data
     def new(self, name, surname, part, email, phonenumber, gepartmentid):
-    """Создание нового сотрудника"""
+        """Создание нового сотрудника"""
         with connection.cursor() as cursor:
             cursor.execute("INSERT INTO employees VALUES(NULL,%s,%s,%s,%s,%s,%s);",[name, surname, part, email, phonenumber, gepartmentid])
     def update(self, id, newname, newsurname, newpart, newemail, newphonenumber):
-    """Обновление существующего сотрудника"""
+        """Обновление существующего сотрудника"""
         with connection.cursor() as cursor:
             cursor.execute("UPDATE employees SET name = %s, surname = %s, partonymic = %s, email = %s, phonenumber = %s WHERE employeeid = %s",[newname, newsurname, newpart, newemail, newphonenumber, id])
     def delete(self, id):
-    """Удаление сотрудника по id"""
+        """Удаление сотрудника по id"""
         with connection.cursor() as cursor:
             cursor.execute("DELETE FROM employees WHERE employeeid = %s", [id])
     def getbyid(self,id):
-    """Получене одного работника по id"""
+        """Получене одного работника по id"""
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM employees WHERE employeeid = %s", [id])
             data = dictfetchall(cursor)
         return data
     def getbydepid(self,depid):
-    """Получшение списка работников по departmentid"""
+        """Получшение списка работников по departmentid"""
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM employees WHERE departmentid = %s", [depid])
             data = dictfetchall(cursor)
