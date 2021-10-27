@@ -18,7 +18,7 @@ class DepartmentsIndexView(TestCase):
         response = self.client.get(reverse('phonebook:departments'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Отдел")
-    def test_deletedep(self)
+    def test_deletedep(self):
         db = Department()
         db.new('Отдел',0)
         response = self.client.get(reverse('phonebook:departments'))
