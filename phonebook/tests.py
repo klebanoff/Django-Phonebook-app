@@ -38,3 +38,26 @@ class DepartamentView(TestCase):
         response = self.client.get(reverse('phonebook:department', args=(id,)))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Отдел")
+    def test_rename(self):
+        db = Department()
+        db.new('Отдел',0)
+        id = 1
+        response = self.client.get(reverse('phonebook:department', args=(id,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Отдел")
+        client = Client()
+        client.post(reverse('phonebook:department', args=(id,)),
+                    {'department_name': 'Редактирование тест'})
+        response = self.client.get(reverse('phonebook:department', args=(id,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Редактирование тест")
+class DeleteDepView(TestCase):
+    def test_deletedep(self):
+        db = Department()
+        db.new('Отдел',0)
+        id = 1
+        response = self.client.get(reverse('phonebook:deletedepartment', args=(id,)))
+        response = self.client.get(reverse('phonebook:departments'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Не добавлено ни одного отдела")
+        self.assertQuerysetEqual(response.context['departments_dictlist'], [])
