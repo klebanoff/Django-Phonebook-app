@@ -11,7 +11,7 @@ class DepartmentsIndexView(TestCase):
         response = self.client.get(reverse('phonebook:departments'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Не добавлено ни одного отдела")
-        self.assertQuerysetEqual(response.context['departments_list'], [])
+        self.assertQuerysetEqual(response.context['departments_dictlist'], [])
     def test_onedepartment(self):
         db = Department()
         db.new('Отдел',0)
@@ -24,17 +24,17 @@ class DepartmentsIndexView(TestCase):
         response = self.client.get(reverse('phonebook:departments'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Отдел")
-        id = db.getall[0].get('departmentid')
+        id = 1
         db.delete(id)
         response = self.client.get(reverse('phonebook:departments'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Не добавлено ни одного отдела")
-        self.assertQuerysetEqual(response.context['departments_list'], [])
+        self.assertQuerysetEqual(response.context['departments_dictlist'], [])
 class DepartamentView(TestCase):
     def test_viewdep(self):
         db = Department()
         db.new('Отдел',0)
-        id = db.getall[0].get('departmentid')
+        id = 1
         response = self.client.get(reverse('phonebook:department', args=(id,)))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Отдел")
