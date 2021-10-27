@@ -18,5 +18,5 @@ before_script:
 #command to run the test suite
 script:
   - python manage.py test
-  - coverage run --source=department_app manage.py test
+  - coverage run --source=phonebook manage.py test
   - COVERALLS_REPO_TOKEN=SGylNv7jv7g8DFwnqgsrodBEX7cvWlWQF coveralls
